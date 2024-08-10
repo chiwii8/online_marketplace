@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  mysql:
+    # Mysql Database
+    image: mysql:8.0.1
+    container_name: mysql_database
+    restart: no
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_db:/var/lib/mysql
+      # When we have an init file to create and mapping the classes
+      # may insert an examples data elements
+      #- ./files/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
+
+  online_marketplace:
+  #App with spring boot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Online_marketplace
+    image: online_marketplace
+    restart: no
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_db:
