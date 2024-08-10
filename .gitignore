@@ -87,3 +87,10 @@ buildNumber.properties
 .mvn/timing.properties
 
 .mvn/wrapper/maven-wrapper.jar
+
+#maven-wrapper
+.mvn/wrapper/maven-wrapper.properties
+.mvn
+
+#Enviroment Variables
+.env
