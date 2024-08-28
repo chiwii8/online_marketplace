@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 @EqualsAndHashCode(of = {"id","email"})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public abstract class Person{
 
     @Id
@@ -24,7 +25,7 @@ public abstract class Person{
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
 }

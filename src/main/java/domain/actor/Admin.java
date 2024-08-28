@@ -1,9 +1,7 @@
 package domain.actor;
 
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor

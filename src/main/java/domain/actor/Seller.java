@@ -16,12 +16,12 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Seller extends Person{
 
-    @Column(name = "comercialName", nullable = false)
-    private String comercialName;
+    @Column(name = "commercialName", nullable = false)
+    private String commercialName;
 
     ///Relations
 
-    @OneToMany
+    @OneToMany(mappedBy = "seller")
     private List<Product> productList;
 
 }
