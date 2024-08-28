@@ -5,20 +5,21 @@ import exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import repository.SellerRepository;
+import utils.ExceptionUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @Service
 public class SellerService {
 
-    private SellerRepository sellerRepository;
+    private final SellerRepository sellerRepository;
 
     @Autowired
     public SellerService(SellerRepository sellerRepository){
-        this .sellerRepository = sellerRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     ///CRUD Operations
@@ -31,22 +32,12 @@ public class SellerService {
         return seller;
     }
 
-    public void save(Seller seller){
-        Seller seller1;
-        if(seller==null)
-            throw new NullPointerException(Seller.class.getSimpleName() + ":The object is null");
-
-        seller1 = this.sellerRepository.save(seller);
-    }
-
-    public void delete(Seller seller){
-        if(seller==null)
-
-        this.sellerRepository.delete(seller);
-    }
-
     public Seller findById(Long sellerId){
         Seller seller;
+
+        if(sellerId == null){
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
+        }
 
         Optional<Seller> optional = this.sellerRepository.findById(sellerId);
 
@@ -58,5 +49,40 @@ public class SellerService {
 
         return seller;
     }
+
+    public List<Seller> findAll(){
+        List<Seller> sellerList;
+
+        sellerList = this.sellerRepository.findAll();
+
+        return sellerList;
+    }
+
+    public void save(Seller seller){
+        if(seller==null)
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
+
+        this.sellerRepository.save(seller);
+    }
+
+    public void delete(Seller seller){
+        if(seller==null)
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
+
+        this.sellerRepository.delete(seller);
+    }
+
+    ///Extra queries
+    public List<Seller> findByCommercialName(String commercialName){
+        List<Seller> sellerList;
+        if(commercialName==null){
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
+        }
+
+         sellerList = this.sellerRepository.findByCommercialName(commercialName);
+
+        return sellerList;
+    }
+
 
 }
