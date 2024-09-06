@@ -50,11 +50,11 @@ public class PersonService {
         return  personList;
     }
 
-    public void save(Person person){
+    public Person save(Person person){
         if(person==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Person.class));
 
-        this.personRepository.save(person);
+        return this.personRepository.save(person);
     }
 
     public void delete(Person person){

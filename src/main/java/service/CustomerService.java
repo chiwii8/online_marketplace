@@ -53,11 +53,11 @@ public class CustomerService {
         return  customerList;
     }
 
-    public void save(Customer customer){
+    public Customer save(Customer customer){
         if(customer==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Customer.class));
 
-        this.customerRepository.save(customer);
+        return this.customerRepository.save(customer);
     }
 
     public void delete(Customer customer){

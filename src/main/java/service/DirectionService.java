@@ -53,11 +53,11 @@ public class DirectionService {
         return  directionList;
     }
 
-    public void save(Direction direction){
+    public Direction save(Direction direction){
         if(direction==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Direction.class));
 
-        this.directionRepository.save(direction);
+        return this.directionRepository.save(direction);
     }
 
     public void delete(Direction direction){

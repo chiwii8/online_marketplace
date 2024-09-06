@@ -58,11 +58,11 @@ public class SellerService {
         return sellerList;
     }
 
-    public void save(Seller seller){
+    public Seller save(Seller seller){
         if(seller==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
 
-        this.sellerRepository.save(seller);
+        return this.sellerRepository.save(seller);
     }
 
     public void delete(Seller seller){

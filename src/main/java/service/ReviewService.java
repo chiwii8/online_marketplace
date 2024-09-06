@@ -52,11 +52,11 @@ public class ReviewService {
         return  reviewList;
     }
 
-    public void save(Review review){
+    public Review save(Review review){
         if(review==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Review.class));
 
-        this.reviewRepository.save(review);
+        return this.reviewRepository.save(review);
     }
 
     public void delete(Review review){

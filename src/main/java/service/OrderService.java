@@ -54,11 +54,11 @@ public class OrderService {
         return  orderList;
     }
 
-    public void save(Order order){
+    public Order save(Order order){
         if(order==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Order.class));
 
-        this.orderRepository.save(order);
+        return this.orderRepository.save(order);
     }
 
     public void delete(Order order){

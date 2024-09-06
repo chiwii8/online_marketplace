@@ -53,11 +53,11 @@ public class AdminService {
         return  adminList;
     }
 
-    public void save(Admin admin){
+    public Admin save(Admin admin){
         if(admin==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Seller.class));
 
-        this.adminRepository.save(admin);
+        return this.adminRepository.save(admin);
     }
 
     public void delete(Admin admin){

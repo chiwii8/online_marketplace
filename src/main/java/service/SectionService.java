@@ -53,11 +53,11 @@ public class SectionService {
         return  sectionList;
     }
 
-    public void save(Section section){
+    public Section save(Section section){
         if(section==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(Section.class));
 
-        this.sectionRepository.save(section);
+        return this.sectionRepository.save(section);
     }
 
     public void delete(Section section){

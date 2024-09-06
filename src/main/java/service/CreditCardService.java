@@ -54,11 +54,11 @@ public class CreditCardService {
         return  creditCardList;
     }
 
-    public void save(CreditCard creditCard){
+    public CreditCard save(CreditCard creditCard){
         if(creditCard==null)
             throw new NullPointerException(ExceptionUtils.getNullMessage(CreditCard.class));
 
-        this.creditCardRepository.save(creditCard);
+        return this.creditCardRepository.save(creditCard);
     }
 
     public void delete(CreditCard creditCard){
