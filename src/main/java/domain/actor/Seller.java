@@ -24,4 +24,11 @@ public class Seller extends Person{
     @OneToMany(mappedBy = "seller")
     private List<Product> productList;
 
+    @Override
+    public void updateFrom(Person person){
+        super.updateFrom(person);
+        if(person instanceof Seller seller){
+            this.commercialName = seller.getCommercialName();
+        }
+    }
 }

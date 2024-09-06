@@ -1,5 +1,6 @@
 package domain;
 
+import domain.actor.Seller;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +8,6 @@ import lombok.*;
 import domain.enumeration.ProductStatus;
 
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -25,11 +25,6 @@ public class Product{
     private String name;
 
     @NotNull
-    @ElementCollection
-    @Column(name = "features",nullable = false)
-    private Map<String,String> fetures;
-
-    @NotNull
     @NotBlank
     @Column(name = "about", nullable = false)
     private String about;
@@ -45,4 +40,20 @@ public class Product{
 
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
+
+    @ManyToOne
+    private Seller seller;
+
+    /**
+     * This method simplify and encapsulated the update of the attributes of the object
+     * @param product contain the features updated for the user
+     */
+    public void updateFrom(Product product){
+        this.name = product.getName();
+        this.about = product.getAbout();
+        this.reviews = product.getReviews();
+        this.status = product.getStatus();
+        this.sections = product.getSections();
+        this.seller = product.getSeller();
+    }
 }

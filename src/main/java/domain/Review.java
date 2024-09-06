@@ -30,5 +30,9 @@ public class Review{
     @ManyToOne
     private Product product;
 
+    public void updateFrom(Review review){
+        this.puntuation = review.getPuntuation();
+        this.comment = review.getComment();
+    }
 
 }

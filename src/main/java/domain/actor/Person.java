@@ -28,4 +28,11 @@ public abstract class Person{
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
+    public void updateFrom(Person person){
+        this.name = person.getName();
+        this.surnames = person.getSurnames();
+        this.email = person.getEmail();
+        this.phoneNumber = person.getPhoneNumber();
+    }
+
 }

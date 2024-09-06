@@ -32,4 +32,8 @@ public class Section{
     @ManyToOne
     private Section previousSection;
 
+    public void updateFrom(Section section){
+        this.name = section.getName();
+        this.description = section.getDescription();
+    }
 }

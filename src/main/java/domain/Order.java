@@ -31,4 +31,18 @@ public class Order{
     @ManyToMany
     List<Product> products;
 
+    public void addProduct(Product product){
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product){
+        this.products.remove(product);
+    }
+
+    public void updateFrom(Order order){
+        this.identifier = order.getIdentifier();
+        this.status = order.getStatus();
+        this.products = order.getProducts();
+    }
+
 }

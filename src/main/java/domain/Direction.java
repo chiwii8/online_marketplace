@@ -37,8 +37,15 @@ public class Direction{
     @Column(name = "postalcode" , nullable = false)
     private String postalCode;
 
-    //TODO: Write the Patter for the phone number
-    @Pattern(message = "The phone number is not valid", regexp = "")
+    @Pattern(message = "The phone number is not valid", regexp = "^(\\+\\d+\\s+)?(\\(\\d+\\)\\s+)?\\d{4,}")
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    public void updateFrom(Direction direction){
+        this.name = direction.getName();
+        this.city = direction.getCity();
+        this.country = direction.getCountry();
+        this.postalCode = direction.getPostalCode();
+        this.phoneNumber = direction.getPhoneNumber();
+    }
 }
