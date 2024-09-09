@@ -68,4 +68,10 @@ public class ReviewService {
 
         this.reviewRepository.delete(review);
     }
+
+    public void deleteById(Long id){
+        if(id==null)
+            throw new NotFoundException(Review.class);
+        this.reviewRepository.deleteById(id);
+    }
 }

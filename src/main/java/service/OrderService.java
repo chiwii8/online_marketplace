@@ -71,6 +71,12 @@ public class OrderService {
         this.orderRepository.delete(order);
     }
 
+    public void deleteById(Long id){
+        if(id==null)
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Order.class));
+        this.orderRepository.deleteById(id);
+    }
+
     ///Extra queries
     public Order findByIdentifier(UUID identifier){
         if(identifier == null)

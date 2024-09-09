@@ -69,4 +69,12 @@ public class DirectionService {
 
         this.directionRepository.delete(direction);
     }
+
+    public void deleteById(Long id){
+        if(id==null)
+            throw new NullPointerException(ExceptionUtils.getNullMessage(Direction.class));
+
+        this.directionRepository.deleteById(id);
+
+    }
 }

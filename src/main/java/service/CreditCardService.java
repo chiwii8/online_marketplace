@@ -82,4 +82,11 @@ public class CreditCardService {
 
     }
 
+    public void deleteById(Long id){
+        if(id==null)
+            throw new NullPointerException(ExceptionUtils.getNullMessage(CreditCard.class));
+
+        this.creditCardRepository.deleteById(id);
+    }
+
 }
