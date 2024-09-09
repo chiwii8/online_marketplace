@@ -27,13 +27,13 @@ public class ProfileController {
         return this.personService.findById(id);
     }
 
-    @PostMapping()
+    @PostMapping("/new")
     public ResponseEntity<Person> newProfile(@RequestBody Person person){
         try{
             Person returnedPerson = this.personService.save(person);
             return ResponseEntity.ok(returnedPerson);
         }catch (Exception ex){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -43,8 +43,8 @@ public class ProfileController {
             Person person = this.personService.findById(id);
             if(updatedPerson instanceof Customer updatedCustomer && person instanceof Customer customer){
                 customer.updateFrom(updatedCustomer);
-            }else if(updatedPerson instanceof Seller updateSeller && person instanceof Seller seller){
-                seller.updateFrom(updateSeller);
+            }else if(updatedPerson instanceof Seller updatedSeller && person instanceof Seller seller){
+                seller.updateFrom(updatedSeller);
             }else if(updatedPerson instanceof Admin && person instanceof Admin admin){
                 admin.updateFrom(updatedPerson);
             }else{
@@ -58,7 +58,6 @@ public class ProfileController {
         }catch (Exception ex){
             return ResponseEntity.notFound().build();
         }
-
 
     }
 

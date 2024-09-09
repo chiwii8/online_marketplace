@@ -1,7 +1,9 @@
 package controller.common;
 
 import domain.Product;
+import domain.actor.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.ProductService;
 
@@ -32,21 +34,33 @@ public class ProductController {
         return productService.findByName(name);
     }
 
-    @PostMapping
-    public boolean newProduct(@RequestBody Product product){
-        return this.productService.save(product)!=null;
+    @PostMapping("/new")
+    public ResponseEntity<Product> newProduct(@RequestBody Product product){
+        try{
+            Product newProduct = this.productService.save(product);
+            return ResponseEntity.ok(newProduct);
+        }catch (Exception ex){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public  Product updateProduct(@PathVariable Long id,@RequestBody Product product){
-        Product replacedProduct = this.productService.findById(id);
+    public  ResponseEntity<Product> updateProduct(@PathVariable Long id,@RequestBody Product product){
 
-        replacedProduct.updateFrom(product);
+        try {
+            Product replacedProduct = this.productService.findById(id);
+            replacedProduct.updateFrom(product);
 
-        this.productService.save(replacedProduct);
-        return replacedProduct;
+            Product returnedProduct = this.productService.save(replacedProduct);
+
+            return ResponseEntity.ok(returnedProduct);
+        }catch (Exception ex){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
+    @DeleteMapping("/delete/{id}")
     public void deleteProduct(@PathVariable Long id){
         this.productService.deleteById(id);
     }
