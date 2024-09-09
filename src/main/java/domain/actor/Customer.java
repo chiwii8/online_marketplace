@@ -2,9 +2,7 @@ package domain.actor;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import domain.CreditCard;
 import domain.Direction;
 import domain.Order;
@@ -13,6 +11,8 @@ import domain.Review;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -30,6 +30,8 @@ public class Customer extends Person{
 
     @OneToMany
     private List<Review> reviews;
+
+
 
     @Override
     public void updateFrom(Person person){

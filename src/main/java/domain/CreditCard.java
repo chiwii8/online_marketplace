@@ -44,4 +44,13 @@ public class CreditCard{
     @Length(min = 3,max = 3)
     @Column(name = "cvv", nullable = false)
     private String cvv;
+
+    public void updateFrom(CreditCard creditCard){
+        this.owner = creditCard.getOwner();
+        this.brand = creditCard.getBrand();
+        this.number = creditCard.getNumber();
+        this.expirationMonth = creditCard.getExpirationMonth();
+        this.expirationYear = creditCard.getExpirationYear();
+        this.cvv = creditCard.getCvv();
+    }
 }
