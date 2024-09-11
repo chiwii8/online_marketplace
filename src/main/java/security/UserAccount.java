@@ -56,4 +56,14 @@ public class UserAccount implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    public void addAuthorities(Authority authority){
+        if(!this.authorities.contains(authority)) {
+            this.authorities.add(authority);
+        }
+    }
+
+    public void removeAuthorities(Authority authority){
+        this.authorities.remove(authority);
+    }
 }

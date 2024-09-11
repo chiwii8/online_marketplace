@@ -1,6 +1,7 @@
 package security;
 
 import exceptions.IllegalBlankException;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import domain.actor.Seller;
 import exceptions.NotFoundException;
