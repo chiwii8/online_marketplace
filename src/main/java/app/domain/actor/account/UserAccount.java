@@ -1,4 +1,4 @@
-package security;
+package app.security;
 
 import jakarta.persistence.*;
 import lombok.Getter;

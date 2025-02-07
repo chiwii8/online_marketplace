@@ -1,4 +1,4 @@
-package security;
+package app.security;
 
 public record Credentials(String username,String password) {
 

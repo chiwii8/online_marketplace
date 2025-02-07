@@ -1,9 +1,10 @@
-package annotation;
+package app.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.YearMonth;
 import java.util.logging.Logger;
 
@@ -11,9 +12,13 @@ public class CardYearMonthValidator implements ConstraintValidator<ValidCardYear
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
+    private String yearTag;
+    private String monthTag;
+
     @Override
     public void initialize(ValidCardYearMonth constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
+        this.monthTag = constraintAnnotation.monthTag();
+        this.yearTag = constraintAnnotation.yearTag();
     }
 
     @Override
@@ -25,26 +30,30 @@ public class CardYearMonthValidator implements ConstraintValidator<ValidCardYear
         try{
 
             var classType = yearMonthClass.getClass();
-            ValidCardYearMonth annotation = classType.getAnnotation(ValidCardYearMonth.class);
-            Field yearField = classType.getDeclaredField(annotation.yearTag());
-            Field monthField = classType.getDeclaredField(annotation.monthTag());
 
-            Integer year = (Integer) yearField.get(yearMonthClass);
-            Integer month = (Integer) monthField.get(yearMonthClass);
+            Method yearGetter = getterName(classType,yearTag);
+            Method monthGetter = getterName(classType,monthTag);
 
-            if(year == null || month == null){
-                return false;
-            }
+            Integer year = (Integer) yearGetter.invoke(yearMonthClass);
+            Integer month = (Integer) monthGetter.invoke(yearMonthClass);
 
             YearMonth currentYearMonth = YearMonth.now();
             YearMonth inputYearMonth = YearMonth.of(year, month);
 
-            return !inputYearMonth.isBefore(currentYearMonth);
+            return inputYearMonth.isAfter(currentYearMonth) ;
 
-        }catch(Exception ex){
-            logger.info("Problems with the validation of the YearMonth CreditCard");
-            return false;
+        }catch (NoSuchMethodException methodException){
+            logger.info("The Year or Month has not been detected getter method");
+            logger.info("check if the attributes follows the Cammel case nomenclature");
+        } catch(Exception ex){
+            logger.info("Problems with the validation of the Actual year or month ");
         }
+        return false;
+    }
+
+    public Method getterName(Class<?> className, String attributeName ) throws NoSuchMethodException{
+        String getAttribute = "get" + attributeName.substring(0,1).toUpperCase() + attributeName.substring(1);
+        return className.getDeclaredMethod(getAttribute);
     }
 
 }

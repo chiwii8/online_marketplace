@@ -1,4 +1,4 @@
-package app;
+package app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
