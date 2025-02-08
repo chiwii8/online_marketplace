@@ -1,23 +1,24 @@
-FROM eclipse-temurin:17 AS builder
+FROM --platform=$BUILDPLATFORM maven:3.8.5-eclipse-temurin-17 AS builder
+WORKDIR /workdir/server
+COPY pom.xml /workdir/server/pom.xml
+RUN mvn dependency:go-offline
 
-WORKDIR /online_marketplace
+COPY src /workdir/server/src
+RUN mvn install
 
-# Copy the Maven wrapper properties
-COPY .mvn/ .mvn
+CMD ["mvn", "spring-boot:run"]
 
-# Copy the Pom file that contains information of project and configuration information for the maven
-# to build the project such as dependencies, build directory, source directory, test source directory, plugin, goals etc.
-COPY pom.xml ./
-COPY mvnw ./
+FROM builder AS prepare-production
+RUN mkdir -p target/dependency
+WORKDIR /workdir/server/target/dependency
+RUN jar -xf ../*.jar
 
-# Copy the Maven wrappers for both SO, so you can use whatnever you want to
-COPY mvnw.cmd ./
+FROM eclipse-temurin:17-jre-focal
 
-# Run the instructions trigger to resolve all the project dependencies including plugins and reports.
-RUN ./mvnw dependency:go-offline
-
-# Next we copy the src directory in the pre-enviroment
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
-
+EXPOSE 8080
+VOLUME /tmp
+ARG DEPENDENCY=/workdir/server/target/dependency
+COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","app.Application"]

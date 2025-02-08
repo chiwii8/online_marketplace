@@ -1,36 +1,48 @@
-version: '3.3'
-
 services:
-  mysql:
-    # Mysql Database
-    image: mysql:8.0.1
-    container_name: mysql_database
-    restart: no
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - mysql_db:/var/lib/mysql
-      # When we have an init file to create and mapping the classes
-      # may insert an examples data elements
-      #- ./files/mysql:/docker-entrypoint-initdb.d
-    ports:
-      - "3306:3306"
-    expose:
-      - '3306'
-
-  online_marketplace:
-  #App with spring boot
+  backend:
+    container_name: online_marketplace
+    image: online_marketplace
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: Online_marketplace
-    image: online_marketplace
-    restart: no
+    environment:
+      - DB_NAME=online_marketplace
+      - DB_CONTAINER=db
+      - DB_PORT=3306
+      - DB_USERNAME=user1
+      - DB_USER_PASSWORD=pass
+      - DB_ROOT_PASSWORD=root_pass
+    networks:
+      - market_net
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
     depends_on:
-      - mysql
+      db:
+        condition: service_healthy
+
+  db:
+    image: 'mysql:8.0.0'
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-h","localhost"]
+      timeout: 20s
+      interval: 4s
+      retries: 5
+    environment:
+      - MYSQL_DATABASE=online_marketplace
+      - MYSQL_ROOT_PASSWORD=root_pass
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - market_net
+    expose:
+      - 3306
+
 
 volumes:
-  mysql_db:
+  db_data:
+networks:
+  market_net:
