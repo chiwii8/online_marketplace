@@ -1,4 +1,4 @@
-package domain.actor;
+package app.domain.actor;
 
 import jakarta.persistence.Entity;
 import lombok.*;

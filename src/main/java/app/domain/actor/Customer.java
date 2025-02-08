@@ -1,12 +1,12 @@
-package domain.actor;
+package app.domain.actor;
 
+import app.domain.Direction;
+import app.domain.Order;
+import app.domain.Review;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
-import domain.CreditCard;
-import domain.Direction;
-import domain.Order;
-import domain.Review;
+import app.domain.CreditCard;
 
 import java.util.List;
 

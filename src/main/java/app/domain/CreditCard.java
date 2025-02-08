@@ -1,6 +1,6 @@
-package domain;
+package app.domain;
 
-import annotation.ValidCardYearMonth;
+import app.annotation.ValidCardYearMonth;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
 @ValidCardYearMonth(monthTag = "expirationMonth", yearTag = "expirationYear")
 public class CreditCard{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 

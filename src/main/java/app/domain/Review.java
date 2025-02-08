@@ -1,4 +1,4 @@
-package domain;
+package app.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,8 +15,8 @@ import org.hibernate.validator.constraints.Range;
 @EqualsAndHashCode(exclude = {"comment"})
 public class Review{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long idReview;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Range(min = 0, max = 5)
     @Column(name = "punctuation", nullable = false)

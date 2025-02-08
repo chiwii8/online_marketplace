@@ -1,4 +1,4 @@
-package domain.enumeration;
+package app.domain.enumeration;
 
 public enum ProductStatus {
     STOCK, SOLD_OUT;

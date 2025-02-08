@@ -1,11 +1,11 @@
-package domain;
+package app.domain;
 
-import domain.actor.Seller;
+import app.domain.actor.Seller;
+import app.domain.enumeration.ProductStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import domain.enumeration.ProductStatus;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(exclude = {"about","status"})
 public class Product{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -35,7 +35,7 @@ public class Product{
     private ProductStatus status;
 
     ///Relations
-    @ManyToOne
+    @OneToMany
     private List<Section> sections;
 
     @OneToMany(mappedBy = "product")

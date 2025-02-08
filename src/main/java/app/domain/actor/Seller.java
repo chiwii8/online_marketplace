@@ -1,10 +1,10 @@
-package domain.actor;
+package app.domain.actor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
-import domain.Product;
+import app.domain.Product;
 
 import java.util.List;
 

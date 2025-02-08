@@ -1,4 +1,4 @@
-package domain;
+package app.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,11 +12,11 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"idDirection"})
+@EqualsAndHashCode(of = {"id"})
 public class Direction{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long idDirection;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @NotBlank
@@ -30,11 +30,11 @@ public class Direction{
 
     @NotNull
     @NotBlank
-    @Column(name="city", nullable = false)
+    @Column(name="country", nullable = false)
     private String country;
 
     @Length(min = 5, max = 5)
-    @Column(name = "postalcode" , nullable = false)
+    @Column(name = "postcode" , nullable = false)
     private String postalCode;
 
     @Pattern(message = "The phone number is not valid", regexp = "^(\\+\\d+\\s+)?(\\(\\d+\\)\\s+)?\\d{4,}")

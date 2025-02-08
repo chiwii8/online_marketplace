@@ -1,4 +1,4 @@
-package domain;
+package app.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class Section{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -25,11 +25,15 @@ public class Section{
     @Column(name = "description", nullable = false)
     private String description;
 
+    @OneToMany(mappedBy = "sections")
+    private List<Product> products;
+
     ///Relations
-    @OneToMany
+    @OneToMany(mappedBy = "previousSection",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Section> subsections;
 
     @ManyToOne
+    @JoinColumn(name="previous_section_id")
     private Section previousSection;
 
     public void updateFrom(Section section){
