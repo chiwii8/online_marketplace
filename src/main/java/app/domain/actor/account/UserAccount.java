@@ -1,5 +1,6 @@
-package app.security;
+package app.domain.actor.account;
 
+import app.security.Authority;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,18 +10,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @Entity
-@Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-@Getter
 @Setter
+@Table
 public class UserAccount implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
     private String password;
-    private Collection<Authority> authorities;
+    private Collection<GrantedAuthority> authorities;
+
+    public UserAccount(String username, String password, Collection<GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,12 +64,17 @@ public class UserAccount implements UserDetails {
     }
 
     public void addAuthorities(Authority authority){
-        if(!this.authorities.contains(authority)) {
+        String role = authority.getAuthority();
+        if(!this.authorities.contains(authority) &&  Authority.isValid(role)) {
             this.authorities.add(authority);
         }
     }
 
     public void removeAuthorities(Authority authority){
         this.authorities.remove(authority);
+    }
+
+    public UserAccountBuilder builder(){
+        return new UserAccountBuilder();
     }
 }

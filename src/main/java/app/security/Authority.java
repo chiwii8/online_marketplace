@@ -1,4 +1,4 @@
-package security;
+package app.security;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,8 +14,14 @@ public class Authority implements GrantedAuthority {
 
     private String authorityPrivilege;
 
-    public List <Authority> listAllAuthorities(){
-        List<Authority> authorities = new ArrayList<>();
+    public Authority(){}
+
+    public Authority(String role){
+        authorityPrivilege = role;
+    }
+
+    public static List <GrantedAuthority> listAllAuthorities(){
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
         Authority authority1 = new Authority();
         authority1.setAuthorityPrivilege(ADMIN_KEY);
@@ -32,8 +38,8 @@ public class Authority implements GrantedAuthority {
         return authorities;
     }
 
-    public List <Authority> listAuthorities(){
-        List<Authority> authorities = new ArrayList<>();
+    public static List <GrantedAuthority> listAuthorities(){
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
         Authority authority1 = new Authority();
         authority1.setAuthorityPrivilege(CUSTOMER_KEY);
@@ -44,6 +50,14 @@ public class Authority implements GrantedAuthority {
         authorities.add(authority2);
 
         return authorities;
+    }
+
+    public static boolean isValid(String role){
+        return listAllAuthorities()
+                .stream()
+                .anyMatch(authority -> authority
+                        .getAuthority()
+                        .equalsIgnoreCase(role));
     }
 
     public void setAuthorityPrivilege(String authority){
