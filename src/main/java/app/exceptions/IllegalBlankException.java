@@ -1,6 +1,6 @@
-package exceptions;
+package app.exceptions;
 
-import utils.ExceptionUtils;
+import app.utils.ExceptionUtils;
 
 public class IllegalBlankException extends RuntimeException{
     private static final String MESSAGE = "The String element must not be blank";

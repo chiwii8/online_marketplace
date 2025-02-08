@@ -1,4 +1,4 @@
-package utils;
+package app.utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ public class HashPassword {
 
     @Setter
     @Getter
-    private static PasswordEncoder encoder= new BCryptPasswordEncoder(STRONG_SELECTED);
+    private static PasswordEncoder encoder = new BCryptPasswordEncoder(STRONG_SELECTED);
 
     private HashPassword(){
         throw new UnsupportedOperationException("This class cannot be instantiate");
