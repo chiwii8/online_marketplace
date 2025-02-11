@@ -22,6 +22,10 @@ public class UserAccount implements UserDetails {
     private String password;
     private Collection<GrantedAuthority> authorities;
 
+    public UserAccount() {
+
+    }
+
     public UserAccount(String username, String password, Collection<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;

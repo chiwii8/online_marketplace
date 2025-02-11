@@ -31,10 +31,4 @@ public class Customer extends Person{
     @OneToMany
     private List<Review> reviews;
 
-
-
-    @Override
-    public void updateFrom(Person person){
-        super.updateFrom(person);
-    }
 }

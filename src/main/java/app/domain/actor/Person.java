@@ -6,9 +6,10 @@ import lombok.*;
 
 
 
-@MappedSuperclass
+@Entity
 @Setter
 @Getter
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"id","email"})
 public abstract class Person{

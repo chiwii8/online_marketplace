@@ -33,7 +33,7 @@ public class Section{
     private List<Section> subsections;
 
     @ManyToOne
-    @JoinColumn(name="previous_section_id")
+    @JoinColumn(name="previous_section_id",nullable = true)
     private Section previousSection;
 
     public void updateFrom(Section section){
