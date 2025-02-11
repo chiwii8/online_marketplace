@@ -3,13 +3,14 @@ spring:
     url: jdbc:mysql://${DB_CONTAINER:localhost}:${DB_PORT:3306}/${DB_NAME:online_marketplace}?useSSL=false
     username: ${DB_USERNAME:user1}
     password: ${DB_USER_PASSWORD:pass}
-    root_password: ${DB_ROOT_PASSWORD:root_pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
+    hibernate:
+      ddl-auto: create
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      show-sql: true
   hibernate:
-    ddl-auto: create-drop
+    ddl-auto: create
 
 logging:
   level:
