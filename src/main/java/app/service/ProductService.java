@@ -5,6 +5,7 @@ import app.exceptions.NotFoundException;
 import app.repository.ProductRepository;
 import app.service.interfaces.ICommonService;
 import jakarta.transaction.Transactional;
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductService implements ICommonService<Product> {
+public class ProductService implements ICommonService<Product,Long> {
 
     private final ProductRepository productRepository;
 
@@ -28,8 +29,12 @@ public class ProductService implements ICommonService<Product> {
     }
 
     @Override
-    public Product findById(Long id) throws NotFoundException {
+    public Product findById(Long id) throws IllegalArgumentException,NotFoundException {
         Optional<Product> optionalProduct;
+
+        if(id==null){
+            throw new IllegalArgumentException("The id Element recive is null");
+        }
 
         optionalProduct = productRepository.findById(id);
         if(optionalProduct.isEmpty()){
@@ -50,17 +55,20 @@ public class ProductService implements ICommonService<Product> {
     }
 
     @Override
-    public void delete(Product entity) {
-
-        if(!this.productRepository.existsById(entity.getId())){
-            throw new NotFoundException(Product.class);
-        }
-
+    public void delete(Product entity) throws IllegalArgumentException, OptimisticEntityLockException {
         this.productRepository.delete(entity);
     }
 
+    public void deleteById(Long id) throws NotFoundException, IllegalArgumentException, OptimisticEntityLockException{
+        if(id==null || !this.productRepository.existsById(id)){
+            throw new NotFoundException(Product.class);
+        }
+
+        this.productRepository.deleteById(id);
+    }
+
     @Override
-    public Product save(Product entity) {
+    public Product save(Product entity)  throws IllegalArgumentException, OptimisticEntityLockException {
         return this.productRepository.save(entity);
     }
 }
