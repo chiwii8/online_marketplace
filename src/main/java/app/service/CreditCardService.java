@@ -7,6 +7,7 @@ import app.service.interfaces.ICommonService;
 import org.aspectj.weaver.ast.Not;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,12 +52,12 @@ public class CreditCardService implements ICommonService<CreditCard,Long> {
     }
 
     @Override
-    public void delete(CreditCard entity)throws IllegalArgumentException, OptimisticEntityLockException {
+    public void delete(CreditCard entity)throws IllegalArgumentException, OptimisticLockingFailureException {
         this.creditCardRepository.delete(entity);
     }
 
     @Override
-    public void deleteById(Long id) throws NotFoundException,IllegalArgumentException,OptimisticEntityLockException {
+    public void deleteById(Long id) throws NotFoundException,IllegalArgumentException {
         if(id==null || !this.creditCardRepository.existsById(id)){
             throw new NotFoundException(CreditCard.class);
         }
@@ -65,7 +66,7 @@ public class CreditCardService implements ICommonService<CreditCard,Long> {
     }
 
     @Override
-    public CreditCard save(CreditCard entity) throws IllegalArgumentException,OptimisticEntityLockException{
+    public CreditCard save(CreditCard entity) throws IllegalArgumentException,OptimisticLockingFailureException{
         return this.creditCardRepository.save(entity);
     }
 

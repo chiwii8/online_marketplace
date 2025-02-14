@@ -31,9 +31,9 @@ public interface ICommonService<T,ID> {
 
     /**
      * Deletes an entity by is identifier
-     * @param id - must not be null
+     * @param idEntity - must not be null
      */
-    void deleteById(ID id);
+    void deleteById(ID idEntity);
 
     /**
      * Saves the given entity, may be a new one, or an update of the entity

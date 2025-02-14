@@ -7,13 +7,13 @@ import app.service.interfaces.ICommonService;
 import jakarta.transaction.Transactional;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ProductService implements ICommonService<Product,Long> {
 
     private final ProductRepository productRepository;
@@ -33,7 +33,7 @@ public class ProductService implements ICommonService<Product,Long> {
         Optional<Product> optionalProduct;
 
         if(id==null){
-            throw new IllegalArgumentException("The id Element recive is null");
+            throw new IllegalArgumentException("The id Element receive is null");
         }
 
         optionalProduct = productRepository.findById(id);
@@ -55,11 +55,11 @@ public class ProductService implements ICommonService<Product,Long> {
     }
 
     @Override
-    public void delete(Product entity) throws IllegalArgumentException, OptimisticEntityLockException {
+    public void delete(Product entity) throws IllegalArgumentException, OptimisticLockingFailureException {
         this.productRepository.delete(entity);
     }
 
-    public void deleteById(Long id) throws NotFoundException, IllegalArgumentException, OptimisticEntityLockException{
+    public void deleteById(Long id) throws NotFoundException, IllegalArgumentException{
         if(id==null || !this.productRepository.existsById(id)){
             throw new NotFoundException(Product.class);
         }
@@ -68,7 +68,7 @@ public class ProductService implements ICommonService<Product,Long> {
     }
 
     @Override
-    public Product save(Product entity)  throws IllegalArgumentException, OptimisticEntityLockException {
+    public Product save(Product entity)  throws IllegalArgumentException, OptimisticLockingFailureException {
         return this.productRepository.save(entity);
     }
 }
