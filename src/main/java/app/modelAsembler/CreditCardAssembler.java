@@ -2,12 +2,12 @@ package app.modelAsembler;
 
 import app.controller.CreditCardController;
 import app.domain.CreditCard;
-import app.domain.Product;
-import app.service.CreditCardService;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CreditCardAssembler implements RepresentationModelAssembler<CreditCard,EntityModel<CreditCard>> {
 
 

@@ -2,11 +2,9 @@ package app.modelAsembler;
 
 import app.controller.ProductController;
 import app.domain.Product;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
 
 @Component
